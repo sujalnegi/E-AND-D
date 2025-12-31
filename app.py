@@ -36,7 +36,43 @@ def kpd_encrypt(plaintext, key):
         final_output.extend(reversed(block))
     return "".join(final_output)
 
+def kpd_decrypt(ciphertext, key):
+    if not ciphertext:
+        return ""
+    if not key:
+        key = "default"
 
+    if isinstance(ciphertext, bytes):
+        try:
+            ciphertext = ciphertext.decode('utf-8')
+        except:
+            ciphertext = ciphertext.decode('latin-1')
+
+    block_size = 8
+    chars = list(ciphertext)
+    text_len = len(chars)
+    
+    reversed_chars = []
+    for i in range(0, text_len, block_size):
+        block = chars[i : i + block_size]
+        reversed_chars.extend(reversed(block))
+        
+    p_indices = []
+    k_indices = [ord(c) for c in key]
+    key_len = len(k_indices)
+    
+    for i in range(text_len):
+        e_val = ord(reversed_chars[i])
+        
+        d_val = ((e_val - 32) % 95) + 32        
+        k_val = k_indices[i % key_len]
+
+        raw_p = d_val - i - k_val
+        p_val = ((raw_p - 32) % 95) + 32
+        
+        p_indices.append(chr(p_val))
+        
+    return "".join(p_indices)
 
 @app.route('/')
 def index():
@@ -74,7 +110,24 @@ def encrypt_text():
 
 @app.route('/decrypt_text', methods=['POST'])
 def decrypt_text():
-    return "Decryption functionality has been disabled."
+    key = request.form.get('key', '')    
+    ciphertext = ""
+    if 'file' in request.files and request.files['file'].filename != '':
+        f = request.files['file']
+        ciphertext = f.read().decode('utf-8', errors='ignore')
+    else:
+        ciphertext = request.form.get('encrypted_message', '')
+    decrypted_data = kpd_decrypt(ciphertext, key)
+    mem = io.BytesIO()
+    mem.write(decrypted_data.encode('utf-8'))
+    mem.seek(0)
+    
+    return send_file(
+        mem,
+        mimetype='text/plain',
+        as_attachment=True,
+        download_name='decrypted_output.txt'
+    )
 
 if __name__ == '__main__':
     app.run(debug=True)
