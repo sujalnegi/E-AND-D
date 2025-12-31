@@ -166,6 +166,14 @@
             guideBackdrop.addEventListener('click', closeModal);
         </script>
     </div>
+    <a href="{{ url_for('encryption') }}"
+        class="fixed top-1/2 left-4 -translate-y-1/2 transition-transform duration-300 hover:scale-110 z-10 opacity-70 hover:opacity-100">
+        <img src="{{ url_for('static', filename='assets/leftarrow.png') }}" alt="Go to Encryption" class="w-24 h-24">
+    </a>
+    <a href="{{ url_for('decryption') }}"
+        class="fixed top-1/2 right-4 -translate-y-1/2 transition-transform duration-300 hover:scale-110 z-10 opacity-70 hover:opacity-100">
+        <img src="{{ url_for('static', filename='assets/rightarrow.png') }}" alt="Go to Decryption" class="w-24 h-24">
+    </a>
     <script src="{{ url_for('static', filename='js/transitions.js') }}"></script>
 </body>
 

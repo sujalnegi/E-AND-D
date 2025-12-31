@@ -99,6 +99,10 @@
                     class="flex-1 p-3 text-xl font-bold text-white bg-gray-800 rounded-lg hover:bg-black transition-all font-barlow tracking-wide uppercase">
                     Copy
                 </button>
+                <button id="download-btn"
+                    class="flex-1 p-3 text-xl font-bold text-gray-800 bg-white border-[2px] border-gray-800 rounded-lg hover:bg-gray-100 transition-all font-barlow tracking-wide uppercase">
+                    Download
+                </button>
                 <button id="try-another-btn"
                     class="flex-1 p-3 text-xl font-bold text-gray-800 bg-canary rounded-lg border-[2px] border-gray-800 hover:bg-[#c9b800] transition-all font-barlow tracking-wide uppercase">
                     Try Another
@@ -113,6 +117,7 @@
         const modalContent = document.getElementById('modal-content');
         const resultText = document.getElementById('result-text');
         const copyBtn = document.getElementById('copy-btn');
+        const downloadBtn = document.getElementById('download-btn');
         const tryAnotherBtn = document.getElementById('try-another-btn');
         const closeModal = document.getElementById('close-modal');
 
@@ -158,6 +163,19 @@
                     copyBtn.textContent = originalText;
                 }, 2000);
             });
+        });
+
+        downloadBtn.addEventListener('click', () => {
+            const text = resultText.textContent;
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'decrypted_message.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
         });
 
         tryAnotherBtn.addEventListener('click', hideModal);
