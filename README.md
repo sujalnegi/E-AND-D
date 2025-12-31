@@ -26,9 +26,9 @@
 
 ## Demo and Live Links
 
-- Demo Video is [here]().
+- Demo Video is [here](https://drive.google.com/file/d/1pVS2C_VNgre9kfpGZS9cDLNoe-zqrSc7/view?usp=drive_link).
 
-- Live link is [here]().
+- Live link is [here](https://eandd.pythonanywhere.com).
 
 
 ## Usage
