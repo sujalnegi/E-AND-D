@@ -81,6 +81,13 @@
         <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" id="modal-backdrop"></div>
         <div class="relative bg-white/90 p-8 rounded-xl shadow-[5px_5px_0px_#333] border-[2px] border-gray-800 max-w-2xl w-full mx-4 transform scale-95 transition-transform duration-300 translate-y-4"
             id="modal-content">
+            <button id="close-modal"
+                class="absolute top-4 right-4 text-gray-800 hover:text-red-600 transition-colors z-10">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
             <h2 class="text-4xl font-bold mb-4 text-gray-800 font-wagon">Encryption Result</h2>
 
             <div class="bg-gray-100 p-4 rounded-lg border-[2px] border-gray-800 mb-6 max-h-60 overflow-y-auto">
@@ -107,6 +114,18 @@
         const resultText = document.getElementById('result-text');
         const copyBtn = document.getElementById('copy-btn');
         const tryAnotherBtn = document.getElementById('try-another-btn');
+        const closeModal = document.getElementById('close-modal');
+
+        function hideModal() {
+            modal.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100', 'translate-y-0');
+            modalContent.classList.add('scale-95', 'translate-y-4');
+
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                form.reset();
+            }, 300);
+        }
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -141,16 +160,9 @@
                 }, 2000);
             });
         });
-        tryAnotherBtn.addEventListener('click', () => {
-            modal.classList.add('opacity-0');
-            modalContent.classList.remove('scale-100', 'translate-y-0');
-            modalContent.classList.add('scale-95', 'translate-y-4');
 
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                form.reset(); 
-            }, 300);
-        });
+        tryAnotherBtn.addEventListener('click', hideModal);
+        closeModal.addEventListener('click', hideModal);
     </script>
     <script src="{{ url_for('static', filename='js/transitions.js') }}"></script>
 </body>

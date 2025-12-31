@@ -47,15 +47,124 @@
             <a href="{{ url_for('decryption') }}"
                 class="no-underline border-b-2 border-transparent hover:border-gray-800 transition duration-300">Decryption</a>
         </h1>
-        <div class="flex justify-end pr-10 mt-4">
+        <div class="flex justify-center mt-4">
             <div class="h-1 bg-gray-800 w-[900px] rounded"></div>
         </div>
         <p
-            class="font-barlow text-3xl text-white mt-4 text-right pr-10 leading-snug max-w-[900px] ml-auto tracking-normal opacity-90">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusamus, pariatur quae voluptatibus distinctio
-            voluptas veritatis consequuntur explicabo ratione nemo accusantium harum impedit vel quas repudiandae magni
-            vitae suscipit ab eos ex numquam deserunt. Aliquid quod mollitia esse! Consectetur, nihil quas.
+            class="font-barlow text-3xl text-white mt-4 text-center leading-snug max-w-[900px] mx-auto tracking-normal opacity-90">
+            Encryption locks your message into a secret form only the right key can open. Decryption unlocks it back to
+            readable text. Together, they protect your data from curious eyes while sharing information safely, simply,
+            and confidently online every single day.
         </p>
+
+        <div class="flex justify-center mt-8">
+            <button id="guide-btn"
+                class="font-barlow text-2xl px-8 py-2 bg-gray-800 text-canary rounded-lg border-2 border-transparent hover:bg-black hover:border-canary transition-all duration-300 uppercase tracking-widest font-semibold shadow-[4px_4px_0px_#fff] hover:translate-x-[-2px] hover:translate-y-[-2px] active:translate-x-0 active:translate-y-0 active:shadow-none">
+                How It Works ?
+            </button>
+        </div>
+
+        <!-- Guide Modal -->
+        <div id="guide-modal"
+            class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300 text-left">
+            <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" id="guide-backdrop"></div>
+            <div class="relative bg-white/95 p-10 rounded-xl shadow-[8px_8px_0px_#333] border-[3px] border-gray-800 max-w-4xl w-full mx-4 transform scale-95 transition-transform duration-300 translate-y-4 font-calibri"
+                id="guide-content">
+                <button id="close-guide"
+                    class="absolute top-4 right-4 text-gray-800 hover:text-red-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+
+                <h2 class="text-5xl font-bold mb-8 text-gray-800 font-wagon border-b-2 border-gray-800 pb-2">User Guide
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Encryption Steps -->
+                    <div class="bg-gray-50 p-6 rounded-lg border-2 border-gray-200 flex flex-col h-full">
+                        <h3 class="text-3xl font-bold mb-4 text-gray-800 font-wagon flex items-center">
+                            <span
+                                class="bg-gray-800 text-canary w-8 h-8 rounded-full flex items-center justify-center text-xl mr-3 font-sans">1</span>
+                            Encryption
+                        </h3>
+                        <ol
+                            class="list-[upper-roman] list-inside space-y-3 font-barlow text-xl text-gray-700 tracking-wide font-semibold mb-6 flex-grow">
+                            <li>Click on 'Encryption' to start.</li>
+                            <li>Enter your secret message or upload a .txt file.</li>
+                            <li>Create a unique 'Key' (password).</li>
+                            <li>Hit 'Encrypt' to get your scrambled code.</li>
+                        </ol>
+                        <div class="bg-white p-3 rounded border border-gray-300 font-mono text-sm">
+                            <p class="font-bold text-gray-500 text-xs uppercase mb-1">Example</p>
+                            <p><span class="text-gray-500">Input:</span> "Hello"</p>
+                            <p><span class="text-gray-500">Key:</span> "Secret"</p>
+                            <p><span class="text-gray-500">Result:</span> "X7#m9P..."</p>
+                        </div>
+                    </div>
+
+                    <!-- Decryption Steps -->
+                    <div class="bg-gray-50 p-6 rounded-lg border-2 border-gray-200 flex flex-col h-full">
+                        <h3 class="text-3xl font-bold mb-4 text-gray-800 font-wagon flex items-center">
+                            <span
+                                class="bg-gray-800 text-canary w-8 h-8 rounded-full flex items-center justify-center text-xl mr-3 font-sans">2</span>
+                            Decryption
+                        </h3>
+                        <ol
+                            class="list-[upper-roman] list-inside space-y-3 font-barlow text-xl text-gray-700 tracking-wide font-semibold mb-6 flex-grow">
+                            <li>Navigate to the 'Decryption' page.</li>
+                            <li>Paste the encrypted code or upload the file.</li>
+                            <li>Enter the SAME 'Key' used for locking.</li>
+                            <li>Click 'Decrypt' to reveal the original text.</li>
+                        </ol>
+                        <div class="bg-white p-3 rounded border border-gray-300 font-mono text-sm">
+                            <p class="font-bold text-gray-500 text-xs uppercase mb-1">Example</p>
+                            <p><span class="text-gray-500">Input:</span> "X7#m9P..."</p>
+                            <p><span class="text-gray-500">Key:</span> "Secret"</p>
+                            <p><span class="text-gray-500">Result:</span> "Hello"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 text-center bg-canary/20 p-4 rounded-lg border border-canary/50">
+                    <p class="font-barlow text-xl tracking-wide uppercase font-bold text-gray-800">
+                        Note: Keep the KEY safe and dont loose it otherwise your data will never be decrypted
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const guideBtn = document.getElementById('guide-btn');
+            const guideModal = document.getElementById('guide-modal');
+            const guideContent = document.getElementById('guide-content');
+            const closeGuide = document.getElementById('close-guide');
+            const guideBackdrop = document.getElementById('guide-backdrop');
+
+            function openModal() {
+                guideModal.classList.remove('hidden');
+                requestAnimationFrame(() => {
+                    guideModal.classList.remove('opacity-0');
+                    guideContent.classList.remove('scale-95', 'translate-y-4');
+                    guideContent.classList.add('scale-100', 'translate-y-0');
+                });
+            }
+
+            function closeModal() {
+                guideModal.classList.add('opacity-0');
+                guideContent.classList.remove('scale-100', 'translate-y-0');
+                guideContent.classList.add('scale-95', 'translate-y-4');
+                setTimeout(() => {
+                    guideModal.classList.add('hidden');
+                }, 300);
+            }
+
+            guideBtn.addEventListener('click', openModal);
+            closeGuide.addEventListener('click', closeModal);
+            guideBackdrop.addEventListener('click', closeModal);
+        </script>
     </div>
     <script src="{{ url_for('static', filename='js/transitions.js') }}"></script>
 </body>
