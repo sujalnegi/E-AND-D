@@ -27,7 +27,7 @@
                         'calibri': ['Calibri', 'sans-serif'],
                     },
                     colors: {
-                        'canary': '#FFEF00',
+                        'canary': '#D6C200',
                     }
                 }
             }
@@ -35,16 +35,22 @@
     </script>
 </head>
 
-<body class="bg-canary flex justify-center items-center h-screen m-0 p-0 text-gray-800">
-    <div class="container mx-auto text-center px-4 max-w-2xl">
+<body class="bg-canary flex justify-center items-center h-screen m-0 p-0 text-gray-800 overflow-hidden">
+    <div id="page-container"
+        class="container mx-auto text-center px-4 max-w-2xl transform transition-all duration-500 ease-in-out translate-x-full opacity-0">
         <h1 class="text-8xl font-bold mb-8 text-gray-800">Encryption</h1>
         <div
             class="text-left bg-white/40 p-8 rounded-xl backdrop-blur-md border-[2px] border-gray-800 shadow-[5px_5px_0px_#333]">
-            <form action="{{ url_for('encrypt_text') }}" method="POST">
+            <form action="{{ url_for('encrypt_text') }}" method="POST" enctype="multipart/form-data">
                 <div class="mb-5">
                     <label for="message" class="block text-2xl mb-2 text-gray-800">Message</label>
                     <textarea id="message" name="message" rows="4" placeholder="Enter text to encrypt..."
                         class="w-full p-2.5 text-xl bg-transparent border-[2px] border-gray-800 rounded-lg font-calibri focus:outline-none focus:bg-white focus:shadow-[3px_3px_0px_#333] transition-all duration-300"></textarea>
+                </div>
+                <div class="mb-5">
+                    <label for="file" class="block text-2xl mb-2 text-gray-800">Or Upload File (.txt)</label>
+                    <input type="file" id="file" name="file" accept=".txt"
+                        class="w-full p-2.5 text-xl bg-transparent border-[2px] border-gray-800 rounded-lg font-calibri focus:outline-none focus:bg-white focus:shadow-[3px_3px_0px_#333] transition-all duration-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-bold file:bg-gray-800 file:text-canary hover:file:bg-black">
                 </div>
                 <div class="mb-5">
                     <label for="key" class="block text-2xl mb-2 text-gray-800">Key</label>
@@ -56,9 +62,11 @@
             </form>
         </div>
         <a href="{{ url_for('index') }}"
-            class="inline-block mt-8 text-gray-800 font-bold text-xl no-underline border-b-2 border-transparent hover:border-gray-800 transition duration-300">Back
-            to Home</a>
+            class="absolute top-1/2 right-8 -translate-y-1/2 transition-transform duration-300 hover:scale-110">
+            <img src="{{ url_for('static', filename='assets/rightarrow.png') }}" alt="Back to Home" class="w-24 h-24">
+        </a>
     </div>
+    <script src="{{ url_for('static', filename='js/transitions.js') }}"></script>
 </body>
 
 </html>
