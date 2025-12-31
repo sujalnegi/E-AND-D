@@ -35,15 +35,42 @@
     </script>
 </head>
 
-<body class="bg-canary flex justify-center items-center h-screen m-0 p-0 text-gray-800">
-    <div class="container mx-auto text-center px-4 max-w-2xl">
-        <h1 class="text-8xl font-bold mb-8 text-gray-800">Decryption</h1>
-        <p class="text-xl">This is the decryption area</p>
+<body class="bg-canary h-screen m-0 p-0 text-gray-800 overflow-hidden">
+    <div id="page-container"
+        class="w-full h-full flex justify-center items-center relative transform transition-all duration-500 ease-in-out translate-x-full opacity-0">
+        <div class="container mx-auto text-center px-4 max-w-2xl">
+            <h1 class="text-8xl font-bold mb-8 text-gray-800">Decryption</h1>
+            <div
+                class="text-left bg-white/40 p-8 rounded-xl backdrop-blur-md border-[2px] border-gray-800 shadow-[5px_5px_0px_#333]">
+                <form action="{{ url_for('decrypt_text') }}" method="POST" enctype="multipart/form-data">
+                    <div class="mb-5">
+                        <label for="encrypted_message" class="block text-2xl mb-2 text-gray-800">Encrypted
+                            Message</label>
+                        <textarea id="encrypted_message" name="encrypted_message" rows="4"
+                            placeholder="Enter text to decrypt..."
+                            class="w-full p-2.5 text-xl bg-transparent border-[2px] border-gray-800 rounded-lg font-calibri focus:outline-none focus:bg-white focus:shadow-[3px_3px_0px_#333] transition-all duration-300"></textarea>
+                    </div>
+                    <div class="mb-5">
+                        <label for="file" class="block text-2xl mb-2 text-gray-800">Or Upload File (.txt)</label>
+                        <input type="file" id="file" name="file" accept=".txt"
+                            class="w-full p-2.5 text-xl bg-transparent border-[2px] border-gray-800 rounded-lg font-calibri focus:outline-none focus:bg-white focus:shadow-[3px_3px_0px_#333] transition-all duration-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-bold file:bg-gray-800 file:text-canary hover:file:bg-black">
+                    </div>
+                    <div class="mb-5">
+                        <label for="key" class="block text-2xl mb-2 text-gray-800">Key</label>
+                        <input type="text" id="key" name="key" placeholder="Enter decryption key..."
+                            class="w-full p-2.5 text-xl bg-transparent border-[2px] border-gray-800 rounded-lg font-calibri focus:outline-none focus:bg-white focus:shadow-[3px_3px_0px_#333] transition-all duration-300">
+                    </div>
+                    <button type="submit"
+                        class="w-full p-4 text-2xl font-bold text-canary bg-gray-800 rounded-lg font-wagon cursor-pointer border-none transition-all duration-200 hover:bg-black hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[4px_4px_0px_rgba(0,0,0,0.2)] active:translate-x-0 active:translate-y-0 active:shadow-none">Decrypt</button>
+                </form>
+            </div>
+        </div>
         <a href="{{ url_for('index') }}"
-            class="absolute top-1/2 left-8 -translate-y-1/2 transition-transform duration-300 hover:scale-110">
+            class="fixed top-1/2 left-4 -translate-y-1/2 transition-transform duration-300 hover:scale-110 z-10">
             <img src="{{ url_for('static', filename='assets/leftarrow.png') }}" alt="Back to Home" class="w-24 h-24">
         </a>
     </div>
+    <script src="{{ url_for('static', filename='js/transitions.js') }}"></script>
 </body>
 
 </html>
