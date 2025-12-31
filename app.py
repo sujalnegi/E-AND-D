@@ -86,9 +86,10 @@ def encryption():
 def decryption():
     return render_template('decryption.html')
 
+from flask import jsonify
+
 @app.route('/encrypt_text', methods=['POST'])
 def encrypt_text():
-
     key = request.form.get('key', '')
     message = ""
     if 'file' in request.files and request.files['file'].filename != '':
@@ -96,17 +97,10 @@ def encrypt_text():
         message = f.read().decode('utf-8', errors='ignore')
     else:
         message = request.form.get('message', '')
-    encrypted_data = kpd_encrypt(message, key)
-    mem = io.BytesIO()
-    mem.write(encrypted_data.encode('utf-8'))
-    mem.seek(0)
     
-    return send_file(
-        mem,
-        mimetype='text/plain',
-        as_attachment=True,
-        download_name='encrypted_output.txt'
-    )
+    encrypted_data = kpd_encrypt(message, key)
+    
+    return jsonify({'result': encrypted_data})
 
 @app.route('/decrypt_text', methods=['POST'])
 def decrypt_text():
@@ -117,17 +111,10 @@ def decrypt_text():
         ciphertext = f.read().decode('utf-8', errors='ignore')
     else:
         ciphertext = request.form.get('encrypted_message', '')
-    decrypted_data = kpd_decrypt(ciphertext, key)
-    mem = io.BytesIO()
-    mem.write(decrypted_data.encode('utf-8'))
-    mem.seek(0)
     
-    return send_file(
-        mem,
-        mimetype='text/plain',
-        as_attachment=True,
-        download_name='decrypted_output.txt'
-    )
+    decrypted_data = kpd_decrypt(ciphertext, key)
+    
+    return jsonify({'result': decrypted_data})
 
 if __name__ == '__main__':
     app.run(debug=True)
